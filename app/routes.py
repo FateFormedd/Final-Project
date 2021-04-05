@@ -156,3 +156,7 @@ def explore():
         if posts.has_prev else None
     return render_template("discussion.html", title='Explore', posts=posts.items,
                           next_url=next_url, prev_url=prev_url)
+
+@app.route('/rules')
+def rules():
+    return render_template("rules.html", title='Rules')

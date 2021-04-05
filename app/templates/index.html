@@ -1,8 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Hi, {{ current_user.username }}!</h1>
-    {% for post in posts %}
-    <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
-    {% endfor %}
+<div class="row ">
+    <div class="col-sm-4">
+        <div class="card bg-dark text-white">
+            <a href="{{url_for('rules')}}">
+                <img class="card-img" src="/static/assets/play cards.jpg" alt="Play">
+            </a>
+            <div class="card-img-overlay">
+            <h5 class="card-title">Rules</h5>
+            <p class="card-text">Learn to play in a simple and concise way</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card bg-dark text-white">
+            <a href="#">
+                <img class="card-img" src="#" alt="Play">
+            </a>
+            <div class="card-img-overlay">
+                <h5 class="card-title">Play</h5>
+                <p class="card-text">Play with random opponents right NOW</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card bg-dark text-white">
+            <a href="#">
+                <img class="card-img" src="#" alt="Discussion">
+            </a>
+            <div class="card-img-overlay">
+                <h5 class="card-title">Discussion</h5>
+                <p class="card-text">Talk to us</p>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
