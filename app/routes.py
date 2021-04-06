@@ -5,6 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post
 from werkzeug.urls import url_parse
 from datetime import datetime
+from .client import menu_screen
 
 
 @app.route('/')
@@ -21,7 +22,7 @@ def discussion():
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
-        return redirect(url_for('dicussion'))
+        return redirect(url_for('discussion'))
     page = request.args.get('page', 1, type=int)
     posts = current_user.followed_posts().paginate(
         page, app.config['POSTS_PER_PAGE'], False)
@@ -160,3 +161,11 @@ def explore():
 @app.route('/rules')
 def rules():
     return render_template("rules.html", title='Rules')
+
+
+@app.route('/game')
+def game():
+    if current_user.is_authenticated:
+        menu_screen()
+    return redirect(url_for('index'))
+

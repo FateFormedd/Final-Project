@@ -1,12 +1,12 @@
 import pygame
-from network import Network
+from .network import Network
 import pickle
 pygame.font.init()
 
-width = 700
-height = 700
-win = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Client")
+# width = 1400
+# height = 700
+# win = pygame.display.set_mode((width, height))
+# pygame.display.set_caption("Client")
 
 
 class Button:
@@ -90,7 +90,7 @@ def main():
     print("You are player", player)
 
     while run:
-        clock.tick(60)
+        clock.tick(20)
         try:
             game = n.send("get")
         except:
@@ -139,15 +139,20 @@ def main():
         redrawWindow(win, game, player)
 
 def menu_screen():
+    width = 1400
+    height = 700
+    win = pygame.display.set_mode((width, height))
+    pygame.display.set_caption("Client")
+
     run = True
     clock = pygame.time.Clock()
 
     while run:
         clock.tick(60)
-        win.fill((128, 128, 128))
+        win.fill((60, 60, 60))
         font = pygame.font.SysFont("comicsans", 60)
         text = font.render("Click to Play!", 1, (255,0,0))
-        win.blit(text, (100,200))
+        win.blit(text, (550,200))
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -159,5 +164,6 @@ def menu_screen():
 
     main()
 
-while True:
-    menu_screen()
+
+# while True:
+#     menu_screen()

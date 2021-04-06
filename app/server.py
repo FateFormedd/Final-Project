@@ -1,7 +1,6 @@
 import socket
 from _thread import *
 import pickle
-from game import Game
 
 server = "10.0.0.144"
 port = 5555
@@ -11,6 +10,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 try:
     s.bind((server, port))
 except socket.error as e:
+    print('things')
     str(e)
 
 s.listen(2)

@@ -1,6 +1,11 @@
 body, html {
-    background-color: #586497;
     margin-left:0.5%;
     margin-right:0.5%;
+    }
+
+.container {
+    width: auto;
+    max-width: 680px;
+    padding: 0 15px;
     }
 
