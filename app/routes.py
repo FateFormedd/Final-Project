@@ -13,6 +13,7 @@ from .client import menu_screen
 def index():
     return render_template('index.html', title='Home')
 
+
 @app.route('/discussion', methods=['GET', 'POST'])
 @login_required
 def discussion():
@@ -34,6 +35,7 @@ def discussion():
                            posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
 
+
 @app.route('/user/<username>')
 @login_required
 def user(username):
@@ -49,6 +51,8 @@ def user(username):
     return render_template('user.html', user=user, posts=posts.items,
                            next_url=next_url, prev_url=prev_url, form=form)
 
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -62,6 +66,7 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
@@ -78,6 +83,7 @@ def edit_profile():
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile',
                            form=form)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -96,16 +102,19 @@ def login():
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
+
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
 
 @app.before_request
 def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
+
 
 @app.route('/follow/<username>', methods=['POST'])
 @login_required
@@ -126,6 +135,7 @@ def follow(username):
     else:
         return redirect(url_for('index'))
 
+
 @app.route('/unfollow/<username>', methods=['POST'])
 @login_required
 def unfollow(username):
@@ -145,6 +155,7 @@ def unfollow(username):
     else:
         return redirect(url_for('index'))
 
+
 @app.route('/explore')
 @login_required
 def explore():
@@ -158,6 +169,7 @@ def explore():
     return render_template("discussion.html", title='Explore', posts=posts.items,
                           next_url=next_url, prev_url=prev_url)
 
+
 @app.route('/rules')
 def rules():
     return render_template("rules.html", title='Rules')
@@ -169,3 +181,27 @@ def game():
         menu_screen()
     return redirect(url_for('index'))
 
+
+@app.route('/post/post_id')
+def post_detail(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template("post_detail.html", title='Details', post=post)
+
+
+@app.route('/myposts/delete/post_id', methods=['POST'])
+@login_required
+def post_delete(post_id):
+    post = Post.query.get_or_404(post_id)
+
+    if post.author.id != current_user.id:
+        flash("You cannot delete another users post!", 'danger')
+        return redirect(url_for('myposts'))
+
+    db.session.delete(post)
+    db.session.commit()
+    flash("This post has been deleted", 'info')
+    return redirect(url_for('index'))
+
+@app.route('/aj')
+def aj():
+    return render_template("aj.html", title='About')
