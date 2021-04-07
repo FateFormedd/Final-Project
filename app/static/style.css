@@ -9,3 +9,12 @@ body, html {
     padding: 0 15px;
     }
 
+.imgright {
+    float: right;
+    padding: 5px
+}
+
+img {
+    float: left;
+    margin: 5px
+}
