@@ -3,10 +3,10 @@ from .network import Network
 import pickle
 pygame.font.init()
 
-# width = 1400
-# height = 700
-# win = pygame.display.set_mode((width, height))
-# pygame.display.set_caption("Client")
+width = 1400
+height = 700
+win = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Client")
 
 
 class Button:
@@ -81,7 +81,7 @@ def redrawWindow(win, game, p):
     pygame.display.update()
 
 
-
+btns = [Button("Rock", 50, 500, (0,0,0)), Button("Scissors", 250, 500, (255,0,0)), Button("Paper", 450, 500, (0,255,0))]
 def main():
     run = True
     clock = pygame.time.Clock()
@@ -90,7 +90,7 @@ def main():
     print("You are player", player)
 
     while run:
-        clock.tick(20)
+        clock.tick(60)
         try:
             game = n.send("get")
         except:
@@ -139,17 +139,12 @@ def main():
         redrawWindow(win, game, player)
 
 def menu_screen():
-    width = 1400
-    height = 700
-    win = pygame.display.set_mode((width, height))
-    pygame.display.set_caption("Client")
-
     run = True
     clock = pygame.time.Clock()
 
     while run:
         clock.tick(60)
-        win.fill((60, 60, 60))
+        win.fill((128, 128, 128))
         font = pygame.font.SysFont("comicsans", 60)
         text = font.render("Click to Play!", 1, (255,0,0))
         win.blit(text, (550,200))
@@ -163,7 +158,6 @@ def menu_screen():
                 run = False
 
     main()
-
 
 # while True:
 #     menu_screen()

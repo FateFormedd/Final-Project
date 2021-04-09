@@ -67,6 +67,14 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post {}>'.format(self.body)
 
+    def to_dict(self):
+        return{
+        'id': self.id,
+        'body': self.body,
+        'timestamp': self.timestamp,
+        'user': User.query.get(self.user_id).username
+    }
+
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))

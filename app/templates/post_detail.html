@@ -4,7 +4,7 @@
 <h4 class='card-title'><a href="{{ url_for('user', username=post.author.username) }}">
     {{ post.author.username }}
 </a>
-says:</h4><br>{{ post.body }}
+says:</h4><br>{{ post.content }}
 
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
     Delete Post

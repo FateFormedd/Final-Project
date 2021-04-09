@@ -1,11 +1,12 @@
 from flask import render_template, flash, redirect, request, url_for
-from app import app, db
+from app import app, db, login
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, EmptyForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post
 from werkzeug.urls import url_parse
 from datetime import datetime
-from .client import menu_screen
+from .client import main, menu_screen
+from .network import Network
 
 
 @app.route('/')
@@ -51,6 +52,10 @@ def user(username):
     return render_template('user.html', user=user, posts=posts.items,
                            next_url=next_url, prev_url=prev_url, form=form)
 
+
+# @login.user_loader
+# def load_user(user_id):
+#     return User.get(user_id)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -178,11 +183,11 @@ def rules():
 @app.route('/game')
 def game():
     if current_user.is_authenticated:
-        menu_screen()
-    return redirect(url_for('index'))
+        main()
+    else:
+        return redirect(url_for('index'))
 
-
-@app.route('/post/post_id')
+@app.route('/post/<post_id>')
 def post_detail(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template("post_detail.html", title='Details', post=post)
